@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+	"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+	<title>Form Login Cadastro Web</title>
+	<h:outputStylesheet library="css" name="styles.css" />
+</h:head>
+
+<h:body>
+
+	<h:panelGrid columns="2" rendered="#{!empty usuarioBean.usuario.id}">
+
+		<h:outputLabel value="Usuário logado" styleClass="emphasis" />
+		<h:outputText value="#{contextUsuarioBean.usuarioLogado.login}"
+			styleClass="emphasis" />
+
+		<h:outputLabel value="Nome do usuário logado" styleClass="emphasis" />
+		<h:outputText value="#{contextBean.usuarioLogado.nome}"
+			styleClass="emphasis" />
+
+	</h:panelGrid>
+
+	<hr />
+
+	<h:outputText value="Confirmar dados" styleClass="title" />
+
+	<hr />
+
+	<h:form>
+
+		<h:panelGrid columns="2" cellspacing="3">
+
+			<h:outputLabel value="ID de Usuário" styleClass="emphasis"
+				rendered="#{!empty usuarioBean.usuario.id}" />
+			<h:outputText value="#{usuarioBean.usuario.id}"
+				rendered="#{!empty usuarioBean.usuario.id}" />
+
+			<h:outputLabel value="Nome" />
+			<h:outputText value="#{usuarioBean.usuario.nome}" />
+
+			<h:outputLabel value="Data de Nascimento" styleClass="emphasis" />
+			<h:outputText value="#{usuarioBean.usuario.dataNascimento}">
+				<f:convertDateTime dateStyle="default" />
+			</h:outputText>
+
+			<h:outputLabel value="Idade" styleClass="emphasis" />
+			<h:panelGroup>
+				<h:outputText value="#{usuarioBean.usuario.calculateAge()} anos"
+					rendered="#{!empty usuarioBean.usuario.dataNascimento}" />
+			</h:panelGroup>
+
+			<h:outputLabel value="Sexo" />
+			<h:panelGroup>
+				<h:outputText
+					value="#{!empty usuarioBean.usuario.sexo ? usuarioBean.usuario.sexo.toString().equals('M') ? 'Masculino' : 'Feminino' : '' }" />
+			</h:panelGroup>
+
+			<h:outputLabel value="E-mail" styleClass="emphasis" />
+			<h:outputLink value="mailto:#{usuarioBean.usuario.email}">
+				<h:outputText value="#{usuarioBean.usuario.email}" />
+			</h:outputLink>
+
+			<h:outputLabel value="Status" styleClass="emphasis" />
+			<h:panelGroup>
+				<h:outputText
+					value="#{usuarioBean.usuario.status.equals(true) ? 'Ativo' : 'Inativo'}"
+					rendered="#{!empty usuarioBean.usuario.status}" />
+			</h:panelGroup>
+
+			<h:outputLabel value="Login" />
+			<h:outputText value="#{usuarioBean.usuario.login}" />
+
+			<h:outputLabel value="Senha: " styleClass="emphasis" />
+			<h:outputText value="#{usuarioBean.usuario.senha}" />
+
+		</h:panelGrid>
+
+		<h:commandButton action="#{usuarioBean.saveOrUpdate()}" value="Salvar" />
+
+	</h:form>
+
+	<br />
+
+	<hr />
+
+	<h:form>
+		<h:commandLink value="voltar" action="cadastrarUsuario" />
+	</h:form>
+
+</h:body>
+</html>
